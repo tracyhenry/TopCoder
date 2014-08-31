@@ -1,0 +1,42 @@
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <queue>
+#include <deque>
+#include <stack>
+#include <bitset>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <cstdio>
+#include <string>
+#include <cstring>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+#define LL long long
+#define pi 3.1415926535897932384626433 
+#define sqr(a) ((a)*(a))
+using namespace std;
+	
+class <%:class-name%> {
+public:
+	<%:return-type%> <%:method-name%>(<%:param-list%>);
+};
+
+<%:return-type%> <%:class-name%>::<%:method-name%>(<%:param-list%>) 
+{
+	<%:set-caret%>
+
+
+<%:testing-code%>
+
+
+
+
+

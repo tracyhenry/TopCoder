@@ -29,63 +29,38 @@ public:
 	double calcexpectation(vector <int> p, string s);
 };
 
-double opt[2][1010][30];
-double pro[2][1010][30];
+double opt[1010][30], pro[1010][30];
 char a[1010];
-int n;
+int n, m;
 
 double SquareScores::calcexpectation(vector <int> p, string s) 
 {
 	int n = s.size();
-	p.resize(26);
-	
+	int m = p.size();
 	for (int i = 1; i <= n; i ++)
 		a[i] = s[i - 1];
 	
+	//pro
 	for (int i = 1; i <= n; i ++)
-	{
-		int cur = (i % 2);
-		memset(opt[cur], 0, sizeof(opt[cur]));	
-		memset(pro[cur], 0, sizeof(pro[cur]));
+		for (int j = 0; j < m; j ++)
+			if (a[i] == '?')
+				pro[i][j] = p[j] / 100.0;
+			else pro[i][j] = (a[i] == 97 + j ? 1.0 : 0.0);
+	for (int j = 0; j < m; j ++)
+		pro[0][j] = 1.0;
 
-		for (int j = 1; j <= i; j ++)
-			for (int c = 0; c < 26; c ++)
+	double ans = 0;
+	for (int i = 1; i <= n; i ++)
+		for (int c = 0; c < m; c ++)
+		{
+			double pr = 1.0;
+			for (int j = i; j <= n; j ++)
 			{
-				if (a[i] != '?' && a[i] != c + 97)
-					continue;
-
-				double w = (a[i] == '?' ? p[c] / 100.0 : 1.0);
-				//p
-				if (i == 1)
-					pro[cur][j][c] = w;
-				else if (j == 1)
-				{
-					for (int x = 0; x < i; x ++)
-						for (int y = 0; y < 26; y ++)
-							if (y != c)
-								pro[cur][j][c] += pro[1 - cur][x][y] * w;
-				}
-				else
-					pro[cur][j][c] = pro[1 - cur][j - 1][c] * w;
-				
-				//opt
-				if (i == 1)
-					opt[cur][j][c] = w;
-				else if (j == 1)
-				{
-					for (int x = 0; x < i; x ++)
-						for (int y = 0; y < 26; y ++)
-							if (y != c)
-								opt[cur][j][c] += (opt[1 - cur][x][y] + pro[1 - cur][x][y]) * w;
-				}
-				else 
-					opt[cur][j][c] = (opt[1 - cur][j - 1][c] + j * pro[1 - cur][j - 1][c]) * w;
+				pr *= pro[j][c];
+				ans += pr;
+				if (pro[j][c] == 0)
+					break;
 			}
-	}
-
-	double ans = 0.0;
-	for (int j = 1; j <= n; j ++)
-		for (int c = 0; c < 26; c ++)
-			ans += opt[n % 2][j][c];
+		}
 	return ans;
 }

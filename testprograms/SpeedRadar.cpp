@@ -19,26 +19,29 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
-#include <unordered_map>
-#include <unordered_set>
 #define LL long long
 #define pi 3.1415926535897932384626433 
 #define sqr(a) ((a)*(a))
 using namespace std;
 	
-class <%:class-name%> {
+class SpeedRadar {
 public:
-	<%:return-type%> <%:method-name%>(<%:param-list%>);
+	double averageSpeed(int minLimit, int maxLimit, vector <int> readings);
 };
 
-<%:return-type%> <%:class-name%>::<%:method-name%>(<%:param-list%>) 
+double SpeedRadar::averageSpeed(int minLimit, int maxLimit, vector <int> readings) 
 {
-	<%:set-caret%>
+	int sum = 0, tot = 0;
+	for (int i = 0; i < readings.size(); i ++)
+	{
+		int x = readings[i];
+		if (minLimit <= x && x <= maxLimit)
+			sum += x, tot ++;
+	}
+	if (((int) readings.size() - tot) / (double) readings.size() > 0.1)
+		return 0.0;
+	return (double) sum / tot;
+}
+	
 
-
-<%:testing-code%>
-
-
-
-
-
+//Powered by KawigiEdit 2.1.8 (beta) modified by pivanof!
